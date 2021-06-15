@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/calc2.dart';
 import 'calc.dart';
 
 void main() {
@@ -14,8 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: (
-          // Calculator()
-          Calc2()
+          Calculator()
         ),
       ),
       

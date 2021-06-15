@@ -2,56 +2,54 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-class Calc2 extends StatefulWidget {
+class Calculator extends StatefulWidget {
   @override
-  _Calc2State createState() => _Calc2State();
+  _CalculatorState createState() => _CalculatorState();
 }
 
-class _Calc2State extends State<Calc2> {
+class _CalculatorState extends State<Calculator> {
   String result = "";
   String history = "";
-   Widget btn(text){
+   Widget btn(btnVal){
     return ConstrainedBox(
               constraints: BoxConstraints.tightFor(width: 82, height: 62),
               child: ElevatedButton(onPressed: (){
-                abc(text);
+                abc(btnVal);
               }, 
-              child: Text(text, style: TextStyle(fontSize: 22),),
+              child: Text(btnVal, style: TextStyle(fontSize: 22),),
               style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Color(0xff070726)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(0),
-              // side: BorderSide(color: Colors.white),
     )
   )
 )
               ),);
               }
-              Widget operationBtn(text){
+              Widget operationBtn(btnVal){
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ConstrainedBox(
                 constraints: BoxConstraints.tightFor(width: 65, height: 62),
                 child: ElevatedButton(onPressed: (){
-                  abc(text);
+                  abc(btnVal);
                 }, 
-                child: Text(text, style: TextStyle(fontSize: 22, color: Colors.blue),),
+                child: Text(btnVal, style: TextStyle(fontSize: 22, color: Colors.blue),),
                 style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40),
-                // side: BorderSide(color: Colors.white),
     )
   )
 )
                 ),),
               );
               }
-  abc(text) {
+  abc(btnVal) {
     setState(() {
-      result = result + text;
+      result = result + btnVal;
     });
   }
 
@@ -199,7 +197,6 @@ class _Calc2State extends State<Calc2> {
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40),
-                      // side: BorderSide(color: Colors.white)
       )))
 ),),
                     ),              ],
