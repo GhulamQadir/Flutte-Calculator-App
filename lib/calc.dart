@@ -1,46 +1,64 @@
-
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-class Calculator extends StatefulWidget {
+class Calc2 extends StatefulWidget {
   @override
-  _CalculatorState createState() => _CalculatorState();
+  _Calc2State createState() => _Calc2State();
 }
 
-class _CalculatorState extends State<Calculator> {
+class _Calc2State extends State<Calc2> {
   String result = "";
-
-
-  Widget btn(texttt){
+  String history = "";
+   Widget btn(text){
     return ConstrainedBox(
               constraints: BoxConstraints.tightFor(width: 82, height: 62),
               child: ElevatedButton(onPressed: (){
-                abc(texttt);
+                abc(text);
               }, 
-              child: Text(texttt, style: TextStyle(fontSize: 20),),
+              child: Text(text, style: TextStyle(fontSize: 22),),
               style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xff070726)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(0),
-              side: BorderSide(color: Colors.white),
+              // side: BorderSide(color: Colors.white),
     )
   )
 )
               ),);
-  }
-
-  abc(texttt) {
+              }
+              Widget operationBtn(text){
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ConstrainedBox(
+                constraints: BoxConstraints.tightFor(width: 65, height: 62),
+                child: ElevatedButton(onPressed: (){
+                  abc(text);
+                }, 
+                child: Text(text, style: TextStyle(fontSize: 22, color: Colors.blue),),
+                style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+                // side: BorderSide(color: Colors.white),
+    )
+  )
+)
+                ),),
+              );
+              }
+  abc(text) {
     setState(() {
-      result = result + texttt;
+      result = result + text;
     });
   }
 
   clearr() {
     setState(() {
       result = "";
+      history = "";
     });
   }
   clearOne(){
@@ -58,8 +76,8 @@ class _CalculatorState extends State<Calculator> {
     Expression exp = p.parse(result);
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
-
     setState(() {
+      history = result;
       result = eval.toString();
     });
   }
@@ -71,27 +89,36 @@ class _CalculatorState extends State<Calculator> {
         home: Scaffold(
           appBar: AppBar(
             title: Center(
-            child: Text("Calculator App",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text("Calculator App",
+              style: TextStyle(
+                color: Color(0xff070726),
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+              ),
+              ),
             ),
             ),
-            ),
-          backgroundColor: Color(0xffdce0e6),
+          backgroundColor: Colors.white,
           ),
         body: SingleChildScrollView(
           child: Container(
-            color: Colors.black,
-            // height: 2000,
+            color: Color(0xff070726),
+
             child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
                 SizedBox(
-                  height: 100,
+                  height: 30,
                 ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    "$history", 
+                    style: TextStyle(fontSize: 16, color: Colors.white),)),
+                    SizedBox(height: 10,),
                 Align(
                   alignment: Alignment.topRight,
                   child: Text(
@@ -100,33 +127,37 @@ class _CalculatorState extends State<Calculator> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 18,
                 ),
                     Row(
                       children: [
-                        ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(width: 82, height: 62),
-                        child: ElevatedButton(onPressed: clearr, child: Text('C'),
-                        style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        side: BorderSide(color: Colors.white)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ConstrainedBox(
+                          constraints: BoxConstraints.tightFor(width: 65, height: 62,),
+                          child: ElevatedButton(onPressed: clearr, child: Text('C', style: TextStyle(fontSize: 22),),
+                          style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+      ),),),),),),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(width: 65, height: 62),
+                      child: ElevatedButton(onPressed: clearOne, child: Icon(Icons.arrow_back),
+                      style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40),
+
       )))
-),),
-                    btn("/"),
-                    btn("*"),
-                    ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: 82, height: 62),
-                    child: ElevatedButton(onPressed: clearOne, child: Icon(Icons.close_outlined),
-                    style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white)
-      )))
-),),                  ],
+),),),                      
+                    operationBtn("%"),                   
+                    operationBtn("/"),
+                    ],
                     ),
 
                 Row(
@@ -134,7 +165,7 @@ class _CalculatorState extends State<Calculator> {
                     btn("7"),
                     btn("8"),
                     btn("9"),
-                    btn("-"),
+                    operationBtn("*"),
                   ],
                 ),
                 Row(
@@ -142,7 +173,7 @@ class _CalculatorState extends State<Calculator> {
                     btn("4"),
                     btn("5"),
                     btn("6"),
-                    btn("+"),
+                    operationBtn("-"),
                   ],
                 ),
                 Row(
@@ -150,17 +181,7 @@ class _CalculatorState extends State<Calculator> {
                     btn("1"),
                     btn("2"),
                     btn("3"),
-                    ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: 82, height: 62),
-                    child: ElevatedButton(onPressed: output, child: Text('='),
-                    style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0),
-                    side: BorderSide(color: Colors.white)
-      )))
-),),
+                    operationBtn("+"),
                     ],
                 ),
                 Row(
@@ -168,9 +189,21 @@ class _CalculatorState extends State<Calculator> {
                     btn("."),
                     btn("0"),
                     btn("00"),
-              ],
-                ),
-              ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(width: 65, height: 62),
+                      child: ElevatedButton(onPressed: output, child: Text('=', style: TextStyle(fontSize: 22),),
+                      style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40),
+                      // side: BorderSide(color: Colors.white)
+      )))
+),),
+                    ),              ],
+                 ) ]
             ),
       ),
           ),
